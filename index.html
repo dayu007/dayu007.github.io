@@ -167,6 +167,397 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-docker-容器" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/12/27/docker-容器/" class="article-date">
+  	<time datetime="2018-12-27T07:05:25.000Z" itemprop="datePublished">2018-12-27</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/27/docker-容器/">
+        docker 容器
+        
+      </a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Docker，主讲：汤小洋"><a href="#Docker，主讲：汤小洋" class="headerlink" title="Docker，主讲：汤小洋"></a>Docker，主讲：<strong>汤小洋</strong></h1><h2 id="一、Docker简介"><a href="#一、Docker简介" class="headerlink" title="一、Docker简介"></a>一、Docker简介</h2><h3 id="1-Docker是什么？"><a href="#1-Docker是什么？" class="headerlink" title="1. Docker是什么？"></a>1. Docker是什么？</h3><p>​    产生背景：</p>
+<ul>
+<li>开发和运维之间因为环境不同而导致的矛盾（不同的操作系统、软件环境、应用配置等） DevOps</li>
+<li>集群环境下每台服务器都配置相同的环境，太麻烦</li>
+<li>解决“在我的机器上可以正常工作”的问题</li>
+</ul>
+<p>​        Docker是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。</p>
+<p>​    阿里云、百度云等都支持Docker技术</p>
+<p>​    官网：<a href="https://www.docker.com/" target="_blank" rel="noopener">https://www.docker.com/</a></p>
+<p>​    中文官网：<a href="http://www.docker-cn.com/" target="_blank" rel="noopener">http://www.docker-cn.com/</a></p>
+<h3 id="2-Docker作用"><a href="#2-Docker作用" class="headerlink" title="2. Docker作用"></a>2. Docker作用</h3><p>​    Docker是一种容器技术，使用Docker可以：</p>
+<ul>
+<li>将软件环境安装并配置好，打包成一个镜像Image，然后将该镜像发布出去（Docker仓库）</li>
+<li>其他使用者可以在仓库中下载获取这个镜像</li>
+<li>通过Docker运行这个镜像，就可以获取同样的环境（容器）</li>
+</ul>
+<p>​        Docker简化了环境部署和配置，实现“一次构建，处处运行”，避免了因运行环境不一致而导致的异常</p>
+<p>​         可以将Docker简单的认为是一个虚拟机，可以运行各种软件环境的虚拟机，但与传统虚拟机技术有所不同</p>
+<p>​    Docker容器技术与传统虚拟机技术的区别：</p>
+<ul>
+<li><p>传统虚拟机技术：模拟一个完整的操作系统，先虚拟出一套硬件，然后在其上安装操作系统，最后在系统上再运行应用程序</p>
+<p>缺点：资源占用多，启动慢</p>
+</li>
+<li><p>Docker容器技术：不是模拟一个完整的操作系统，没有进行硬件虚拟，而是对进程进行隔离，封装成容器，容器内的应用程序是直接使用宿主机的内核，且容器之间是互相隔离的，互不影响</p>
+<p>优点：更轻便、效率高、启动快、秒级</p>
+</li>
+</ul>
+<h3 id="3-基本术语"><a href="#3-基本术语" class="headerlink" title="3. 基本术语"></a>3. 基本术语</h3><p>​    术语：</p>
+<ul>
+<li><p>Docker主机（Host）</p>
+<p>安装了Docker程序的主机，运行Docker守护进程</p>
+</li>
+<li><p>Docker镜像（Image）</p>
+<p>将软件环境打包好的模板，用来创建容器的，一个镜像可以创建多个容器</p>
+</li>
+<li><p>Docker容器（Container）</p>
+<p>运行镜像后生成的实例称为容器，每运行一次镜像就会产生一个容器，容器可以启动、停止或删除</p>
+<p>容器使用是沙箱机制，互相隔离，是独立是安全的</p>
+<p>可以把容器看作是一个简易版的Linux环境，包括用户权限、文件系统和运行的应用等</p>
+</li>
+<li><p>Docker仓库（Repository）</p>
+<p>用来保存镜像的，仓库中包含许多镜像，每个镜像都有不同的标签Tag</p>
+<p>官方仓库：<a href="https://hub.docker.com/" target="_blank" rel="noopener">https://hub.docker.com/</a></p>
+</li>
+</ul>
+<p>​        使用Docker的步骤：</p>
+<ol>
+<li>安装Docker</li>
+<li>从Docker仓库中下载软件对应的镜像</li>
+<li>运行这个镜像，此时会生成一个Docker容器</li>
+<li>对容器的启动/停止就是对软件的启动/停止</li>
+</ol>
+<h2 id="二、准备Linux系统"><a href="#二、准备Linux系统" class="headerlink" title="二、准备Linux系统"></a>二、准备Linux系统</h2><h3 id="1-安装虚拟机软件"><a href="#1-安装虚拟机软件" class="headerlink" title="1. 安装虚拟机软件"></a>1. 安装虚拟机软件</h3><p>​    VMware、VirtualBox</p>
+<p>​    Ubuntu、RHEL、CentOS、Debian、SLES（SUSE）</p>
+<h3 id="2-新建虚拟机"><a href="#2-新建虚拟机" class="headerlink" title="2. 新建虚拟机"></a>2. 新建虚拟机</h3><p>​    版本：Red Hat（64-bit）</p>
+<p>​    网络：桥接网卡</p>
+<p>​    光驱：选择操作系统的iso文件</p>
+<h3 id="3-安装CentOS"><a href="#3-安装CentOS" class="headerlink" title="3. 安装CentOS"></a>3. 安装CentOS</h3><h3 id="4-连接Linux服务器"><a href="#4-连接Linux服务器" class="headerlink" title="4. 连接Linux服务器"></a>4. 连接Linux服务器</h3><p>​    步骤：</p>
+<ol>
+<li><p>查看服务器ip地址、</p>
+<p>在虚拟机中执行<code>ip addr</code></p>
+</li>
+<li><p>连接服务器</p>
+<p>在客户端中执行<code>ssh 服务器账户@服务器地址</code>，然后输入密码</p>
+<p>注：SSH是Secure Shell的缩写，用于远程登陆访问的协议</p>
+</li>
+</ol>
+<h3 id="5-基本操作"><a href="#5-基本操作" class="headerlink" title="5. 基本操作"></a>5. 基本操作</h3><h4 id="5-1-常用命令"><a href="#5-1-常用命令" class="headerlink" title="5.1 常用命令"></a>5.1 常用命令</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/cpuinfo  <span class="comment"># 查看cpu信息</span></span><br><span class="line">cat /proc/meminfo  <span class="comment"># 查看内存信息</span></span><br><span class="line">uname -r <span class="comment"># 查看内核信息，Docker要求CentOS必须是64位，且内核是3.10及以上</span></span><br><span class="line">sudo reboot <span class="comment"># 重启,sudo表示以管理员root身份执行</span></span><br><span class="line">sudo halt <span class="comment"># 关机</span></span><br></pre></td></tr></table></figure>
+<h4 id="5-2-安装软件"><a href="#5-2-安装软件" class="headerlink" title="5.2 安装软件"></a>5.2 安装软件</h4><p>​    使用yum，是一个基于rpm的软件包管理工具</p>
+<p>​    用来安装软件包，可以自动解决软件包之间的依赖关系</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install 软件包名  <span class="comment">#　安装</span></span><br><span class="line">yum remove 软件包名 <span class="comment"># 卸载</span></span><br></pre></td></tr></table></figure>
+<h2 id="三、Docker安装"><a href="#三、Docker安装" class="headerlink" title="三、Docker安装"></a>三、Docker安装</h2><h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h3><p>​    Docker版本：社区版CE、企业版EE</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置yum源</span></span><br><span class="line">yum install -y yum-utils device-mapper-persistent-data lvm2</span><br><span class="line">yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo</span><br><span class="line">yum makecache fast</span><br><span class="line"><span class="comment"># 安装Docker-CE</span></span><br><span class="line">yum -y install docker-ce</span><br></pre></td></tr></table></figure>
+<h3 id="2-启动-停止"><a href="#2-启动-停止" class="headerlink" title="2. 启动/停止"></a>2. 启动/停止</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">docker version <span class="comment"># 查看版本</span></span><br><span class="line">systemctl start docker <span class="comment">#　启动</span></span><br><span class="line">systemctl stop docker　<span class="comment"># 停止</span></span><br><span class="line">systemctl status docker <span class="comment">#　查看状态</span></span><br><span class="line">systemctl restart docker　　<span class="comment"># 重启</span></span><br><span class="line">systemctl <span class="built_in">enable</span> docker  <span class="comment"># 设置开机自动启动</span></span><br><span class="line"><span class="comment"># 验证，运行hello-world</span></span><br><span class="line">docker run hello-world  <span class="comment"># 下载hello-world镜像并运行</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-配置Docker镜像加速"><a href="#3-配置Docker镜像加速" class="headerlink" title="3. 配置Docker镜像加速"></a>3. 配置Docker镜像加速</h3><p>​    使用阿里云提供的镜像加速（镜像仓库），也可以使用网易云等</p>
+<p>​    步骤：</p>
+<ol>
+<li><p>注册并登陆“阿里云的开发者平台” <a href="http://dev.aliyun.com" target="_blank" rel="noopener">http://dev.aliyun.com</a></p>
+</li>
+<li><p>查看专属的加速器地址</p>
+</li>
+<li><p>配置自己的Docker加速器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/docker/daemon.json</span><br><span class="line">	&#123;</span><br><span class="line">      <span class="string">"registry-mirrors"</span>: [<span class="string">"https://sswv6yx0.mirror.aliyuncs.com"</span>]</span><br><span class="line">    &#125;</span><br><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="四、Docker操作"><a href="#四、Docker操作" class="headerlink" title="四、Docker操作"></a>四、Docker操作</h2><p>​    输入<code>docker</code>可以查看Docker的命令用法，输入<code>docker COMMAND --help</code>查看指定命令的详细用法</p>
+<h3 id="1-镜像操作"><a href="#1-镜像操作" class="headerlink" title="1. 镜像操作"></a>1. 镜像操作</h3><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>查找</td>
+<td>docker search 关键字</td>
+<td>可以在Docker Hub网站查看镜像的详细信息，如镜像的tag标签</td>
+</tr>
+<tr>
+<td>抽取</td>
+<td>docker pull 镜像名:tag</td>
+<td>:tag表示软件的版本，如果不指定默认是latest</td>
+</tr>
+<tr>
+<td>列表</td>
+<td>docker images</td>
+<td>查看所有本地镜像</td>
+</tr>
+<tr>
+<td>获取元信息</td>
+<td>docker inspect 镜像id</td>
+<td>获取镜像的元信息，详细信息</td>
+</tr>
+<tr>
+<td>删除</td>
+<td>docker rmi -f 镜像id或镜像名:tag</td>
+<td>删除指定的本地镜像，-f表示强制删除</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-容器操作"><a href="#2-容器操作" class="headerlink" title="2. 容器操作"></a>2. 容器操作</h3><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>运行</td>
+<td>docker run –name 容器名 -i -t -p 主机端口:容器端口  -d  -v 主机目录:容器目录:ro 镜像id或镜像名称:tag</td>
+<td>–name 指定容器名，名称自定义，如果不指定会自动命名； -i 以交互模式运行，即以交互模式运行容器；-t 分配一个伪终端，即命令行，通常组合使用-it ；-p 指定端口映射，将主机端口映射到容器内的端口；-d 表示后台运行，即守护式运行容器；-v 指定挂载主机目录到容器目录，默认为rw读写模式，ro表示只读</td>
+</tr>
+<tr>
+<td>列表</td>
+<td>docker ps -a  -q</td>
+<td>查看正在运行的容器，-a表示显示所有容器，-q表示只显示容器id</td>
+</tr>
+<tr>
+<td>启动</td>
+<td>docker start 容器id或容器名称</td>
+<td>启动容器</td>
+</tr>
+<tr>
+<td>停止</td>
+<td>docker stop 容器id或容器名称</td>
+<td>停止正在运行的容器</td>
+</tr>
+<tr>
+<td>删除</td>
+<td>docker rm -f 容器id或容器名称</td>
+<td>删除容器，-f表示强制删除</td>
+</tr>
+<tr>
+<td>日志</td>
+<td>docker logs 容器id或容器名称</td>
+<td>获取容器的日志</td>
+</tr>
+<tr>
+<td>在容器中执行</td>
+<td>docker exec -it 容器id或容器名称 /bin/bash</td>
+<td>进入正在运行的容器中并开启一个交互模式的终端，可以在容器中执行操作</td>
+</tr>
+<tr>
+<td>拷贝文件</td>
+<td>docker cp 主机中的文件路径 容器id或容器名称:容器路径；docker cp 容器id或容器名称:容器中的文件路径 主机路径</td>
+<td>将文件中的文件拷贝到容器中；将容器中的文件拷贝到主机中</td>
+</tr>
+<tr>
+<td>获取元信息</td>
+<td>docker inspect 容器id</td>
+<td>获取容器的元信息</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>以CentOS为例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">docker search centos</span><br><span class="line">docker pull centos</span><br><span class="line">docker run --name mycentos -it centos:latest  <span class="comment"># 根据centos:latest镜像运行容器，并以交互模式进入容器中</span></span><br><span class="line"><span class="comment"># 实际上是在Docker容器中运行一个精简版的CentOS系统 </span></span><br><span class="line"><span class="built_in">exit</span> <span class="comment"># 退出并关闭容器</span></span><br><span class="line">docker ps -a</span><br><span class="line">docker start mycentos</span><br><span class="line">docker stop mycentos</span><br><span class="line">docker rm mycentos</span><br><span class="line">docker rm -f $(docker ps -aq)  <span class="comment"># 强制删除所有容器</span></span><br></pre></td></tr></table></figure>
+<p>​    <strong>注：Docker容器内实际上是运行着一个精简版的Linux系统</strong></p>
+<p>以tomcat为例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 示例1：基本用法</span></span><br><span class="line">docker search tomcat</span><br><span class="line">docker pull tomcat</span><br><span class="line">docker run --name mytomcat -p 8888:8080 -d tomcat </span><br><span class="line"><span class="comment"># 测试：http://宿主机地址：8888</span></span><br><span class="line">docker stop mytomcat</span><br><span class="line">docker ps -a</span><br><span class="line">docker start mytomcat</span><br><span class="line"></span><br><span class="line"><span class="comment"># 示例2：拷贝文件和挂载目录</span></span><br><span class="line">docker run -p 8080:8080 -d tomcat</span><br><span class="line">docker <span class="built_in">exec</span> -it 70cba924861c  /bin/bash</span><br><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/tomcat/webapps/ROOT</span><br><span class="line"><span class="built_in">exit</span></span><br><span class="line"><span class="built_in">echo</span> welcome to tomcat &gt; index.jsp</span><br><span class="line">docker cp index.jsp 70cba924861c:/usr/<span class="built_in">local</span>/tomcat/webapps/ROOT  <span class="comment"># 将宿主机中的文件拷贝到容器中指定的目录中</span></span><br><span class="line"><span class="comment">#　部署web项目，将war文件放到容器中</span></span><br><span class="line">docker cp spring-web.war 70cba924861c:/usr/<span class="built_in">local</span>/tomcat/webapps</span><br><span class="line"></span><br><span class="line"><span class="comment"># 问题：如果项目更改了需要重新拷贝war文件，太麻烦，可以直接挂载目录（也称为数据卷Volume）</span></span><br><span class="line">docker run \</span><br><span class="line">-p 8080:8080 \</span><br><span class="line">-v /my/tomcat/webapps/spring-web.war:/usr/<span class="built_in">local</span>/tomcat/webapps/spring-web.war \</span><br><span class="line">-v /my/tomcat/data:/usr/<span class="built_in">local</span>/tomcat/dataVolume:ro \</span><br><span class="line">-d tomcat</span><br><span class="line"></span><br><span class="line"><span class="comment"># 示例3：启动多个容器，一个镜像可以启动多个容器，互相隔离、独立</span></span><br><span class="line">docker run -p 8081:8080 -d tomcat</span><br><span class="line">docker run -p 8082:8080 -d tomcat</span><br><span class="line">docker run -p 8083:8080 -d tomcat</span><br></pre></td></tr></table></figure>
+<h3 id="3-镜像的分层结构"><a href="#3-镜像的分层结构" class="headerlink" title="3. 镜像的分层结构"></a>3. 镜像的分层结构</h3><p>​    tomcat镜像为什么这么大？</p>
+<p>​    镜像是一种轻量级、可执行的独立软件包，<strong>用来打包软件运行环境和基于运行环境的软件，包含运行某个软件所需要的所有内容。</strong>    </p>
+<p>​    基于UnionFS联合文件系统，采用分层结构，一层一层的堆叠起来，像一个同心圆，但从外面来说，只能看到最外层的文件系统（镜像层）</p>
+<p><img src="镜像的分层结构.png" alt="镜像的分层结构"></p>
+<p>分层结构：共享资源、便于复用（许多镜像都是从相同的Base基础镜像构建而来的，基础镜像只需要保存一份）</p>
+<p>​    镜像都是只读的，而由镜像生成的容器是可修改的</p>
+<h3 id="4-创建镜像"><a href="#4-创建镜像" class="headerlink" title="4. 创建镜像"></a>4. 创建镜像</h3><p>​    有时从Docker镜像仓库中下载的镜像不能满足我们的要求，此时可以基于这个镜像（基础镜像）封装一个自己的镜像</p>
+<p>​    两种方式：</p>
+<ul>
+<li>更新镜像：使用docker commit命令</li>
+<li>构建镜像：使用docker build命令，需要创建Dockerfile文件</li>
+</ul>
+<h4 id="4-1-更新镜像"><a href="#4-1-更新镜像" class="headerlink" title="4.1 更新镜像"></a>4.1 更新镜像</h4><p>​    先使用基础镜像创建一个容器，然后对容器进行修改，最后使用commit命令提交为一个新的镜像</p>
+<p>​    步骤：</p>
+<ol>
+<li><p>根据基础镜像，创建容器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name mytomcat -p 8080:8080 -d tomcat</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改容器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it bcd08edac78d  /bin/bash</span><br><span class="line"><span class="built_in">cd</span> webapps/ROOT</span><br><span class="line">rm -f index.jsp</span><br><span class="line"><span class="built_in">echo</span> welcome to tomcat &gt; index.html</span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>提交为新镜像，语法：<code>docker commit -m=&quot;描述消息&quot; -a=&quot;作者&quot; 容器id或容器名 镜像名:tag</code> </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit -m=<span class="string">"修改默认索引页"</span> -a=<span class="string">"汤小洋"</span> bcd08edac78d itany/tomcat:v1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用新镜像运行容器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name tomcat_v1 -p:8080:8080 -d itany/tomcat:v1</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="4-2-构建镜像"><a href="#4-2-构建镜像" class="headerlink" title="4.2 构建镜像"></a>4.2 构建镜像</h4><p>​    根据Dockerfile文件来自动构建镜像</p>
+<p>​    Dockerfile是一个包含创建镜像所有命令的文本文件，使用docker build命令可以根据Dockerfile的内容创建镜像</p>
+<p>​    步骤：</p>
+<ol>
+<li><p>创建一个Dockerfile文件<code>vi Dockerfile</code></p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 基础镜像</span></span><br><span class="line"><span class="keyword">FROM</span> tomcat</span><br><span class="line"></span><br><span class="line"><span class="comment"># 作者</span></span><br><span class="line"><span class="keyword">MAINTAINER</span> tangxiaoyang@itany.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行命令</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> rm -f /usr/<span class="built_in">local</span>/tomcat/webapps/ROOT/index.jsp</span></span><br><span class="line"><span class="bash">RUN <span class="built_in">echo</span> <span class="string">"welcome to tomcat!"</span> &gt; /usr/<span class="built_in">local</span>/tomcat/webapps/ROOT/index.html</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>构建新镜像，语法：<code>docker build -f Dockerfile文件的路径  -t 镜像名:tag 命令执行的上下文</code> </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -f Dockerfile -t itany/tomcat:v2 .</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用新镜像运行容器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 9999:8080 -d itany/tomcat:v2</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="五、Dockerfile详解"><a href="#五、Dockerfile详解" class="headerlink" title="五、Dockerfile详解"></a>五、Dockerfile详解</h2><h3 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h3><p>​    Dockerfile是用来构建Docker镜像的文件，是由一系列命令和参数构成的脚本</p>
+<p>​    Dockerfile从FROM命令开始，紧接着各种命令、参数等，最终会生成一个新的镜像</p>
+<p>​    使用Dockerfile构建镜像的步骤：</p>
+<ol>
+<li>编写Dockerfile文件</li>
+<li>使用docker build构建镜像</li>
+<li>使用docker run运行容器</li>
+</ol>
+<h3 id="2-用法"><a href="#2-用法" class="headerlink" title="2. 用法"></a>2. 用法</h3><h4 id="2-1-语法规则"><a href="#2-1-语法规则" class="headerlink" title="2.1 语法规则"></a>2.1 语法规则</h4><ul>
+<li>指令必须要大写，且后面必须跟参数</li>
+<li>第一条指令必须是FROM，指定Base Image 基础镜像</li>
+<li>指令按从上往下的顺序，依次执行</li>
+<li>每条指定都会创建一个新的镜像层并提交</li>
+<li><code>#</code>表示注释</li>
+</ul>
+<h4 id="2-2-常用指令"><a href="#2-2-常用指令" class="headerlink" title="2.2 常用指令"></a>2.2 常用指令</h4><table>
+<thead>
+<tr>
+<th>指令</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FROM</td>
+<td>指定基础镜像，即当前新镜像是基于哪个镜像的</td>
+</tr>
+<tr>
+<td>MAINTAINER</td>
+<td>指定作者</td>
+</tr>
+<tr>
+<td>RUN</td>
+<td>指定构建过程中要运行的命令</td>
+</tr>
+<tr>
+<td>ENV</td>
+<td>设置环境变量</td>
+</tr>
+<tr>
+<td>WORKDIR</td>
+<td>指定默认的工作目录，即进入容器后默认进入的目录</td>
+</tr>
+<tr>
+<td>VOLUME</td>
+<td>创建挂载点，也称容器数据卷，用于数据共享和持久化</td>
+</tr>
+<tr>
+<td>CMD</td>
+<td>指定容器启动时要运行的命令，与RUN不同的是，这些命令不是在镜像构建过程中执行的</td>
+</tr>
+<tr>
+<td>ENTRYPOINT</td>
+<td>指定容器启动时要运行的命令，与CMD有区别</td>
+</tr>
+<tr>
+<td>COPY</td>
+<td>拷贝文件/目录到镜像中</td>
+</tr>
+<tr>
+<td>ADD</td>
+<td>拷贝文件到镜像中，且会自动解压缩</td>
+</tr>
+<tr>
+<td>EXPOSE</td>
+<td>指定对外暴露的端口</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-案例"><a href="#3-案例" class="headerlink" title="3. 案例"></a>3. 案例</h3><h4 id="3-1-自定义centos镜像"><a href="#3-1-自定义centos镜像" class="headerlink" title="3.1 自定义centos镜像"></a>3.1 自定义centos镜像</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.编写Dockerfile文件</span></span><br><span class="line">vi Dockerfile2</span><br><span class="line">	FROM centos</span><br><span class="line"></span><br><span class="line">	MAINTAINER tangxiaoyang@itany.com</span><br><span class="line"></span><br><span class="line">	ENV MYPATH /usr/<span class="built_in">local</span>/centos</span><br><span class="line">	RUN mkdir -p <span class="variable">$MYPATH</span></span><br><span class="line">	WORKDIR <span class="variable">$MYPATH</span></span><br><span class="line"></span><br><span class="line">	RUN yum -y install vim</span><br><span class="line"></span><br><span class="line">	RUN yum -y install wget</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 创建挂载点，无法指定宿主机上对应的目录，是自动生成的</span></span><br><span class="line">	VOLUME  [<span class="string">"/data1"</span>,<span class="string">"/data2"</span>]</span><br><span class="line"></span><br><span class="line">	CMD [<span class="string">"/bin/bash"</span>]</span><br><span class="line"><span class="comment"># 2.使用docker build构建镜像</span></span><br><span class="line">docker build -f Dockerfile2 -t itany/centos:v1 . </span><br><span class="line"><span class="comment"># 3.使用docker run运行容器</span></span><br><span class="line">docker run -it b25b1dad795c</span><br><span class="line"><span class="comment"># 查看镜像的变更历史</span></span><br><span class="line">docker <span class="built_in">history</span> b25b1dad795c</span><br><span class="line"><span class="comment"># 验证挂载点：</span></span><br><span class="line">/var/lib/docker/volumes/0b001b4cc8db1ebbbb4c537c17a5c44adb700fb0e1b941bc82cc717c4ae196f6/_data</span><br><span class="line">/var/lib/docker/volumes/f020f5a5664bf68312be9f49a640f27ecfb49990b231aaf3d0eb7cb723fa0ddd/_data</span><br></pre></td></tr></table></figure>
+<p>​    CMD和ENTRYPOINT的区别（面试题）：</p>
+<ul>
+<li><p>CMD</p>
+<p>在Dockerfile中可以有多个CMD指令，但只有最后一条指令生效，所以一般只有一条CMD指令</p>
+<p>CMD指令在被docker run之后的参数覆盖</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vi aaa</span><br><span class="line">	<span class="keyword">FROM</span> centos</span><br><span class="line">	<span class="keyword">CMD</span><span class="bash"> [<span class="string">"/bin/ls"</span>]</span></span><br><span class="line"><span class="bash">	CMD [<span class="string">"/bin/bash"</span>]</span></span><br><span class="line"><span class="bash">docker build -f aaa -t itany/aaa . </span></span><br><span class="line"><span class="bash">docker run -it itany/aaa</span></span><br><span class="line"><span class="bash">docker run -it itany/aaa /bin/<span class="built_in">pwd</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ENTRYPOINT</p>
+<p>docker run之后的参数会被作为ENTRYPOINT指令的参数，组合形成新的命令</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vi bbb</span><br><span class="line">	<span class="keyword">FROM</span> centos</span><br><span class="line">	<span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">"/bin/ls"</span>,<span class="string">"/usr/local"</span>]</span></span><br><span class="line"><span class="bash">docker build -f bbb -t itany/bbb .</span></span><br><span class="line"><span class="bash">docker run -it itany/bbb</span></span><br><span class="line"><span class="bash">docker run -it itany/bbb -l  <span class="comment">#  ls /usr/local -l</span></span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="3-2-自定义tomcat镜像"><a href="#3-2-自定义tomcat镜像" class="headerlink" title="3.2 自定义tomcat镜像"></a>3.2 自定义tomcat镜像</h4><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 准备工作 </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1.编写Dockerfile文件</span></span><br><span class="line">vi Dockerfile</span><br><span class="line">	<span class="keyword">FROM</span> centos</span><br><span class="line">	<span class="keyword">MAINTAINER</span> tangxiaoyang@itany.com</span><br><span class="line">	</span><br><span class="line">	<span class="comment"># 拷贝文件，文件必须与Dockerfile在同一目录下</span></span><br><span class="line">	<span class="keyword">COPY</span><span class="bash"> teacher.txt /usr/<span class="built_in">local</span></span></span><br><span class="line"><span class="bash">	ADD jdk-8u171-linux-x64.tar.gz /usr/<span class="built_in">local</span></span></span><br><span class="line"><span class="bash">	ADD apache-tomcat-8.5.30.tar.gz /usr/<span class="built_in">local</span></span></span><br><span class="line"><span class="bash">	</span></span><br><span class="line"><span class="bash">	<span class="comment"># 配置环境变量</span></span></span><br><span class="line"><span class="bash">	ENV JAVA_HOME /usr/<span class="built_in">local</span>/jdk1.8.0_171</span></span><br><span class="line"><span class="bash">	ENV CLASSPATH .:<span class="variable">$JAVA_HOME</span>/lib</span></span><br><span class="line"><span class="bash">	ENV CATALINA_HOME /usr/<span class="built_in">local</span>/apache-tomcat-8.5.30</span></span><br><span class="line"><span class="bash">	ENV PATH <span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$CATALINA_HOME</span>/bin</span></span><br><span class="line"><span class="bash">	</span></span><br><span class="line"><span class="bash">	WORKDIR <span class="variable">$CATALINA_HOME</span></span></span><br><span class="line"><span class="bash">	</span></span><br><span class="line"><span class="bash">	RUN yum -y install vim</span></span><br><span class="line"><span class="bash">	</span></span><br><span class="line"><span class="bash">	EXPOSE 8080</span></span><br><span class="line"><span class="bash">	</span></span><br><span class="line"><span class="bash">	CMD [<span class="string">"catalina.sh"</span>, <span class="string">"run"</span>]</span></span><br><span class="line"><span class="bash"><span class="comment"># 2.使用docker build构建镜像</span></span></span><br><span class="line"><span class="bash">docker build -t itany/tomcat:1.0 .</span></span><br><span class="line"><span class="bash"><span class="comment"># 3.使用docker run运行容器</span></span></span><br><span class="line"><span class="bash">docker run \</span></span><br><span class="line"><span class="bash">--name mytomcat \</span></span><br><span class="line"><span class="bash">-p 8080:8080 \</span></span><br><span class="line"><span class="bash">-v /my/tomcat/webapps/spring-web.war:/usr/<span class="built_in">local</span>/apache-tomcat-8.5.30/webapps/spring-web.war \</span></span><br><span class="line"><span class="bash">-d itany/tomcat:1.0</span></span><br></pre></td></tr></table></figure>
+<h2 id="六、使用Docker搭建环境"><a href="#六、使用Docker搭建环境" class="headerlink" title="六、使用Docker搭建环境"></a>六、使用Docker搭建环境</h2><h3 id="1-安装MySQL"><a href="#1-安装MySQL" class="headerlink" title="1. 安装MySQL"></a>1. 安装MySQL</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.拉取镜像</span></span><br><span class="line">docker pull mysql:5.7</span><br><span class="line"><span class="comment"># 2.运行容器</span></span><br><span class="line">docker run --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql:5.7</span><br><span class="line">docker <span class="built_in">exec</span> -it mysql /bin/bash</span><br><span class="line">find / -name <span class="string">"*mysql*"</span></span><br><span class="line"><span class="built_in">exit</span></span><br><span class="line"><span class="comment"># 3.创建用于挂载的目录</span></span><br><span class="line">mkdir -p /my/mysql/conf <span class="comment"># 挂载配置文件</span></span><br><span class="line">mkdir -p /my/mysql/data <span class="comment"># 挂载数据文件</span></span><br><span class="line">mkdir -p /my/mysql/logs <span class="comment"># 挂载日志文件</span></span><br><span class="line"><span class="comment"># 4.拷贝配置文件并修改</span></span><br><span class="line">docker cp mysql:/etc/mysql/mysql.conf.d/mysqld.cnf /my/mysql/conf/</span><br><span class="line">vi /my/mysql/conf/mysqld.cnf</span><br><span class="line">	character-set-server=utf8</span><br><span class="line"><span class="comment"># 5.重新运行容器	</span></span><br><span class="line">docker rm -f mysql  <span class="comment"># 删除原来的容器</span></span><br><span class="line">docker run \</span><br><span class="line">--name mysql \</span><br><span class="line">-p 3306:3306 \</span><br><span class="line">-v /my/mysql/conf:/etc/mysql/mysql.conf.d/ \</span><br><span class="line">-v /my/mysql/data:/var/lib/mysql \</span><br><span class="line">-v /my/mysql/logs:/logs \</span><br><span class="line">-e MYSQL_ROOT_PASSWORD=root \</span><br><span class="line">-d mysql:5.7</span><br><span class="line"><span class="comment"># 6.访问</span></span><br><span class="line"><span class="comment"># 本地访问</span></span><br><span class="line">docker <span class="built_in">exec</span> -it mysql /bin/bash</span><br><span class="line">mysql -u root -p </span><br><span class="line"><span class="comment"># 远程访问</span></span><br><span class="line">mysql -u root -p -h 宿主机地址</span><br></pre></td></tr></table></figure>
+<h3 id="2-安装Redis"><a href="#2-安装Redis" class="headerlink" title="2. 安装Redis"></a>2. 安装Redis</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.拉取镜像</span></span><br><span class="line">docker pull redis</span><br><span class="line"><span class="comment"># 2.创建用于挂载的目录</span></span><br><span class="line">mkdir -p /my/redis/conf </span><br><span class="line">mkdir -p /my/redis/data</span><br><span class="line"><span class="comment"># 3.拷贝配置文件并修改</span></span><br><span class="line">wget http://download.redis.io/releases/redis-4.0.10.tar.gz</span><br><span class="line">tar zxf redis-4.0.10.tar.gz</span><br><span class="line">cp redis.conf /my/redis/conf/</span><br><span class="line">vi redis.conf</span><br><span class="line">	requirepass itany</span><br><span class="line">	appendonly yes</span><br><span class="line"><span class="comment"># 4.运行容器</span></span><br><span class="line">docker run \</span><br><span class="line">--name myredis \</span><br><span class="line">-p 6379:6379 \</span><br><span class="line">-v /my/redis/conf/redis.conf:/usr/<span class="built_in">local</span>/etc/redis/redis.conf \</span><br><span class="line">-v /my/redis/data:/data \</span><br><span class="line">-d redis redis-server /usr/<span class="built_in">local</span>/etc/redis/redis.conf</span><br><span class="line"><span class="comment"># 5.访问</span></span><br><span class="line"><span class="comment"># 本地访问</span></span><br><span class="line">docker <span class="built_in">exec</span> -it myredis /bin/bash</span><br><span class="line">redis-cli</span><br><span class="line"><span class="comment">#　远程访问</span></span><br><span class="line">使用RedisDesktopManager工具连接</span><br></pre></td></tr></table></figure>
+<h3 id="3-安装Nginx"><a href="#3-安装Nginx" class="headerlink" title="3. 安装Nginx"></a>3. 安装Nginx</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.拉取镜像</span></span><br><span class="line">docker pull nginx</span><br><span class="line"><span class="comment"># 2.运行容器</span></span><br><span class="line">docker run --name mynginx -p 80:80 -d nginx</span><br><span class="line"><span class="comment"># 3.创建用于挂载的目录</span></span><br><span class="line">mkdir -p /my/nginx  <span class="comment"># 挂载nginx所有数据</span></span><br><span class="line">mkdir -p /my/nginx/html <span class="comment"># 挂载nginx虚拟主机（网站html数据）</span></span><br><span class="line"><span class="comment"># 4.拷贝配置文件</span></span><br><span class="line">docker cp mynginx:/etc/nginx/nginx.conf /my/nginx  <span class="comment"># 拷贝主配置文件</span></span><br><span class="line">docker cp mynginx:/etc/nginx/conf.d /my/nginx <span class="comment"># 拷贝虚拟主机配置文件</span></span><br><span class="line"><span class="built_in">echo</span> welcome to nginx &gt; /my/nginx/html/index.html <span class="comment">#　自定义索引页</span></span><br><span class="line"><span class="comment"># 5.重启运行容器</span></span><br><span class="line">docker rm -f mynginx</span><br><span class="line">docker run \</span><br><span class="line">--name mynginx \</span><br><span class="line">-p 80:80 -p 443:443 \</span><br><span class="line">-v /my/nginx/nginx.conf:/etc/nginx/nginx.conf \</span><br><span class="line">-v /my/nginx/html:/usr/share/nginx/html:ro \</span><br><span class="line">-v /etc/nginx/conf.d:/usr/nginx/conf.d \</span><br><span class="line">-d nginx</span><br><span class="line"><span class="comment"># 6.测试</span></span><br><span class="line">http://宿主机地址</span><br></pre></td></tr></table></figure>
+<h2 id="七、将本地镜像发布到阿里云"><a href="#七、将本地镜像发布到阿里云" class="headerlink" title="七、将本地镜像发布到阿里云"></a>七、将本地镜像发布到阿里云</h2><p>​    步骤：</p>
+<ol>
+<li><p>登陆“阿里云-开发者平台”，创建命名空间和镜像仓库</p>
+</li>
+<li><p>将镜像推送到阿里云</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 登陆阿里云的docker仓库</span></span><br><span class="line">docker login --username=tangyang8942@163.com registry.cn-hangzhou.aliyuncs.com</span><br><span class="line"><span class="comment"># 创建指定镜像的tag，归入某个仓库</span></span><br><span class="line">docker tag b25b1dad795c registry.cn-hangzhou.aliyuncs.com/itany/centos:v1.0</span><br><span class="line"><span class="comment"># 将镜像推送到仓库中</span></span><br><span class="line">docker push registry.cn-hangzhou.aliyuncs.com/itany/centos:v1.0</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>拉取镜像</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull registry.cn-hangzhou.aliyuncs.com/itany/centos:v1.0</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+      
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
     <article id="post-shiro-学习精华" class="article article-type-post" itemscope="" itemprop="blogPost">
   
     <div class="article-meta">
