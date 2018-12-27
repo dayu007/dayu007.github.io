@@ -19,12 +19,10 @@
 <meta property="og:site_name" content="甜筒的微笑">
 <meta property="og:description" content="Docker，主讲：汤小洋一、Docker简介1. Docker是什么？​    产生背景：  开发和运维之间因为环境不同而导致的矛盾（不同的操作系统、软件环境、应用配置等） DevOps 集群环境下每台服务器都配置相同的环境，太麻烦 解决“在我的机器上可以正常工作”的问题  ​        Docker是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://git.liuyiyi.site/2018/12/27/docker-容器/镜像的分层结构.png">
-<meta property="og:updated_time" content="2018-12-27T07:05:40.405Z">
+<meta property="og:updated_time" content="2018-12-27T07:19:13.135Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="docker 容器">
 <meta name="twitter:description" content="Docker，主讲：汤小洋一、Docker简介1. Docker是什么？​    产生背景：  开发和运维之间因为环境不同而导致的矛盾（不同的操作系统、软件环境、应用配置等） DevOps 集群环境下每台服务器都配置相同的环境，太麻烦 解决“在我的机器上可以正常工作”的问题  ​        Docker是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布">
-<meta name="twitter:image" content="http://git.liuyiyi.site/2018/12/27/docker-容器/镜像的分层结构.png">
   
     <link rel="alternative" href="/atom.xml" title="甜筒的微笑" type="application/atom+xml">
   
@@ -409,7 +407,7 @@
 <h3 id="3-镜像的分层结构"><a href="#3-镜像的分层结构" class="headerlink" title="3. 镜像的分层结构"></a>3. 镜像的分层结构</h3><p>​    tomcat镜像为什么这么大？</p>
 <p>​    镜像是一种轻量级、可执行的独立软件包，<strong>用来打包软件运行环境和基于运行环境的软件，包含运行某个软件所需要的所有内容。</strong>    </p>
 <p>​    基于UnionFS联合文件系统，采用分层结构，一层一层的堆叠起来，像一个同心圆，但从外面来说，只能看到最外层的文件系统（镜像层）</p>
-<p><img src="镜像的分层结构.png" alt="镜像的分层结构"></p>
+<p>镜像的分层结构</p>
 <p>分层结构：共享资源、便于复用（许多镜像都是从相同的Base基础镜像构建而来的，基础镜像只需要保存一份）</p>
 <p>​    镜像都是只读的，而由镜像生成的容器是可修改的</p>
 <h3 id="4-创建镜像"><a href="#4-创建镜像" class="headerlink" title="4. 创建镜像"></a>4. 创建镜像</h3><p>​    有时从Docker镜像仓库中下载的镜像不能满足我们的要求，此时可以基于这个镜像（基础镜像）封装一个自己的镜像</p>
