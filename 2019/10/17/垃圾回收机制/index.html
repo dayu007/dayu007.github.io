@@ -12,14 +12,14 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="垃圾回收垃圾回收算法一共4有种  串行垃圾回收（Serial）   单线程设计环境且使用一个线程执行垃圾回收，会暂停所有用户线程。不适合服务器环境 并行垃圾回收（Parallel）   多个垃圾收集线程并行执行，此时用户线程是暂停的，适用于科学计算/大数据处理等若交互场景。 并发垃圾回收（CMS）   用户线程和垃圾线程可以同时执行（不一定是并行，可能交替执行），不需要停顿用户线程，   互联网公">
-<meta name="keywords" content="java">
+<meta name="keywords" content="垃圾回收">
 <meta property="og:type" content="article">
 <meta property="og:title" content="垃圾回收机制">
 <meta property="og:url" content="https://dayu007.github.io/2019/10/17/垃圾回收机制/index.html">
 <meta property="og:site_name" content="甜筒的微笑">
 <meta property="og:description" content="垃圾回收垃圾回收算法一共4有种  串行垃圾回收（Serial）   单线程设计环境且使用一个线程执行垃圾回收，会暂停所有用户线程。不适合服务器环境 并行垃圾回收（Parallel）   多个垃圾收集线程并行执行，此时用户线程是暂停的，适用于科学计算/大数据处理等若交互场景。 并发垃圾回收（CMS）   用户线程和垃圾线程可以同时执行（不一定是并行，可能交替执行），不需要停顿用户线程，   互联网公">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-10-17T07:34:15.636Z">
+<meta property="og:updated_time" content="2019-10-17T07:43:49.075Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="垃圾回收机制">
 <meta name="twitter:description" content="垃圾回收垃圾回收算法一共4有种  串行垃圾回收（Serial）   单线程设计环境且使用一个线程执行垃圾回收，会暂停所有用户线程。不适合服务器环境 并行垃圾回收（Parallel）   多个垃圾收集线程并行执行，此时用户线程是暂停的，适用于科学计算/大数据处理等若交互场景。 并发垃圾回收（CMS）   用户线程和垃圾线程可以同时执行（不一定是并行，可能交替执行），不需要停顿用户线程，   互联网公">
@@ -116,7 +116,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/并发常用/" style="font-size: 20px;">并发常用</a> <a href="/tags/缓存/" style="font-size: 10px;">缓存</a>
+						<a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a> <a href="/tags/垃圾回收/" style="font-size: 10px;">垃圾回收</a> <a href="/tags/容器技术/" style="font-size: 10px;">容器技术</a> <a href="/tags/并发常用/" style="font-size: 20px;">并发常用</a> <a href="/tags/权限验证/" style="font-size: 10px;">权限验证</a> <a href="/tags/缓存/" style="font-size: 10px;">缓存</a>
 					</div>
 				</section>
 				
@@ -176,7 +176,7 @@
   
     <div class="article-meta">
       <a href="/2019/10/17/垃圾回收机制/" class="article-date">
-  	<time datetime="2019-10-17T07:01:47.000Z" itemprop="datePublished">2019-10-17</time>
+  	<time datetime="2019-10-17T07:01:00.000Z" itemprop="datePublished">2019-10-17</time>
 </a>
     </div>
   
@@ -198,7 +198,15 @@
       
       <div class="article-info article-info-post">
         
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/垃圾回收/">垃圾回收</a></li></ul>
+	</div>
+
         
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/JVM/">JVM</a>
+	</div>
+
 
         
         <div class="clearfix"></div>
