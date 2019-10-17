@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>java-生产环境服务器变慢，诊断思路和性能评估？ | 甜筒的微笑</title>
+
+  <!-- keywords -->
+  
+    <meta name="keywords" content="java">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="生产环境服务器变慢，诊断思路和性能评估？大致从五个方面  整机top命令  CPU: vmstat 内存：free 硬盘： df 磁盘：iostat 网络： ifstat         下面说说几个命令： toptop命令就不多说了，主要查看进程占用CPU的比例。按数字键1，可以查看每个内核的占用情况 vmstat1vmstat -n 2 3 一般vmstat工具的使用是通过两个数字参数来完成的">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="生产环境服务器变慢，诊断思路和性能评估？">
+<meta property="og:url" content="https://dayu007.github.io/2019/10/17/Untitled/index.html">
+<meta property="og:site_name" content="甜筒的微笑">
+<meta property="og:description" content="生产环境服务器变慢，诊断思路和性能评估？大致从五个方面  整机top命令  CPU: vmstat 内存：free 硬盘： df 磁盘：iostat 网络： ifstat         下面说说几个命令： toptop命令就不多说了，主要查看进程占用CPU的比例。按数字键1，可以查看每个内核的占用情况 vmstat1vmstat -n 2 3 一般vmstat工具的使用是通过两个数字参数来完成的">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-10-17T07:34:31.781Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="生产环境服务器变慢，诊断思路和性能评估？">
+<meta name="twitter:description" content="生产环境服务器变慢，诊断思路和性能评估？大致从五个方面  整机top命令  CPU: vmstat 内存：free 硬盘： df 磁盘：iostat 网络： ifstat         下面说说几个命令： toptop命令就不多说了，主要查看进程占用CPU的比例。按数字键1，可以查看每个内核的占用情况 vmstat1vmstat -n 2 3 一般vmstat工具的使用是通过两个数字参数来完成的">
+  
+    <link rel="alternative" href="/atom.xml" title="甜筒的微笑" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="https://liuyiyi.site/head.jpg">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+
+  <script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
+  
+</head></html>
+<body>
+  <div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="https://liuyiyi.site/head.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">dayu007</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">努力的人更加快乐</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Linux/" style="font-size: 10px;">Linux</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/smackgg/hexo-theme-smackdown">smackdown</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">dayu007</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="https://liuyiyi.site/head.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">dayu007</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">努力的人更加快乐</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-Untitled" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/10/17/Untitled/" class="article-date">
+  	<time datetime="2019-10-17T07:10:03.000Z" itemprop="datePublished">2019-10-17</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      生产环境服务器变慢，诊断思路和性能评估？
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="生产环境服务器变慢，诊断思路和性能评估？"><a href="#生产环境服务器变慢，诊断思路和性能评估？" class="headerlink" title="生产环境服务器变慢，诊断思路和性能评估？"></a>生产环境服务器变慢，诊断思路和性能评估？</h1><p>大致从五个方面</p>
+<ol>
+<li>整机top命令 </li>
+<li>CPU: vmstat</li>
+<li>内存：free</li>
+<li>硬盘： df</li>
+<li>磁盘：iostat</li>
+<li>网络： ifstat       </li>
+</ol>
+<p>下面说说几个命令：</p>
+<h2 id="top"><a href="#top" class="headerlink" title="top"></a>top</h2><p>top命令就不多说了，主要查看进程占用CPU的比例。<br>按数字键1，可以查看每个内核的占用情况</p>
+<h2 id="vmstat"><a href="#vmstat" class="headerlink" title="vmstat"></a>vmstat</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vmstat -n 2 3</span><br></pre></td></tr></table></figure>
+<p>一般vmstat工具的使用是通过两个数字参数来完成的，第-个参数是采样的时间间隔数单位是秒，第二个参数是采样的次数</p>
+<h3 id="procs"><a href="#procs" class="headerlink" title="procs"></a>procs</h3><p>​    ● r 运行和等待CPU时间片的进程数，原则上1核的CPU的运行队列不要超过2，整个系统的运行队列不能超过总核数的2倍，否则代表系统压力过大<br>​    ● b 等待资源的进程数，比如正在等待磁盘I/O、网络I/O等。</p>
+<h3 id="cpu"><a href="#cpu" class="headerlink" title="cpu"></a>cpu</h3><p>  ●us:用户进程消耗CPU时间百分比，us值高，用户进程消耗CPU时间多，如果长期大于50%， 优化程序;<br>  ●sy: 内核进程消耗的CPU时间百分比;<br>  ●us + sy参考值为80%， 如果us + sy大于80%， 说明可能存在CPU不足。<br>  id:处于空闲的CPU百分比<br>  wa:系统等待IO的CPU时间百分比<br>  st:来自于一个虚拟机偷取的CPU时间的百分比    </p>
+<h2 id="free-m-查看内存"><a href="#free-m-查看内存" class="headerlink" title="free -m 查看内存"></a>free -m 查看内存</h2><p>  查看额外：<br>  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pidstat -p 进程号 -r 采样间隔秒数</span><br></pre></td></tr></table></figure></p>
+<h2 id="Linux之磁盘IO查看iostat和pidstat"><a href="#Linux之磁盘IO查看iostat和pidstat" class="headerlink" title="Linux之磁盘IO查看iostat和pidstat"></a>Linux之磁盘IO查看iostat和pidstat</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>每两秒钟取样一次，一共取三次</span><br><span class="line">iostat -xdk 2 3</span><br></pre></td></tr></table></figure>
+<p>磁盘块设备分布<br>rkB/s每秒读取数据量kB;<br>wkB/s每秒写入数据量kB;<br>L<br>svctm 1/O请求的平均服务时间，单位毫秒;<br>await 1/O请求的平均等待时间，单位毫秒;值越小，性能越好;<br>util一秒中有百分几的时间用于I/O操作。接近100%时，表示磁盘带宽跑满，需要优化程序或者增加磁盘;<br>TrkB/s、wkB/s 根据系统应用不同会有不同的值，但有规律遵循:长期、 超大数据读写，肯定不正常，需要优化程序读取。<br>svctm的值与await的值很接近，表示几乎没有I/O等待，磁盘性能好，<br>如果await的值远高于svctm的值，则表示I/O队列等待太长，需要优化程序或更换更快磁盘。</p>
+<h2 id="Linux之网络IO查看ifstat"><a href="#Linux之网络IO查看ifstat" class="headerlink" title="Linux之网络IO查看ifstat"></a>Linux之网络IO查看ifstat</h2><p>默认环境没有ifstat，需要自己下载</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/10/17/Untitled-1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          假如生产环境出现CPU占用过高，请谈谈你的分析思路和定位
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/10/17/垃圾回收机制/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">垃圾回收机制</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="ds-share share" data-thread-key="Untitled" data-title="生产环境服务器变慢，诊断思路和性能评估？" data-url="https://dayu007.github.io/2019/10/17/Untitled/" data-images="https://liuyiyi.site/head.jpg" data-content="生产环境服务器变慢，诊断思路和性能评估？">
+    <div class="ds-share-inline">
+      <ul class="ds-share-icons-16">
+      	<li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+        <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+        <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+        <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+        <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+      </ul>
+      <div class="ds-share-icons-more">
+      </div>
+    </div>
+ </div>
+ 
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2019 dayu007
+      </div>
+        <div class="footer-right">
+          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/smackgg/hexo-theme-smackdown" target="_blank">Smackdown</a>
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="/js/main.js"></script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js"></script>
+
+
+  </div>
+</body>
+</html>

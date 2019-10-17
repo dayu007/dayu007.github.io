@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>java-假如生产环境出现CPU占用过高，请谈谈你的分析思路和定位 | 甜筒的微笑</title>
+
+  <!-- keywords -->
+  
+    <meta name="keywords" content="java">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="假如生产环境出现CPU占用过高，请谈谈你的分析思路和定位模拟问题代码12345678910import java.util.Random;public class HighCPUDemo&amp;#123;  public static void main(String[] args) &amp;#123;        while (true)&amp;#123;            System.out.print">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="假如生产环境出现CPU占用过高，请谈谈你的分析思路和定位">
+<meta property="og:url" content="https://dayu007.github.io/2019/10/17/Untitled-1/index.html">
+<meta property="og:site_name" content="甜筒的微笑">
+<meta property="og:description" content="假如生产环境出现CPU占用过高，请谈谈你的分析思路和定位模拟问题代码12345678910import java.util.Random;public class HighCPUDemo&amp;#123;  public static void main(String[] args) &amp;#123;        while (true)&amp;#123;            System.out.print">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-10-17T07:34:02.350Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="假如生产环境出现CPU占用过高，请谈谈你的分析思路和定位">
+<meta name="twitter:description" content="假如生产环境出现CPU占用过高，请谈谈你的分析思路和定位模拟问题代码12345678910import java.util.Random;public class HighCPUDemo&amp;#123;  public static void main(String[] args) &amp;#123;        while (true)&amp;#123;            System.out.print">
+  
+    <link rel="alternative" href="/atom.xml" title="甜筒的微笑" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="https://liuyiyi.site/head.jpg">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+
+  <script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
+  
+</head></html>
+<body>
+  <div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="https://liuyiyi.site/head.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">dayu007</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">努力的人更加快乐</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Linux/" style="font-size: 10px;">Linux</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/smackgg/hexo-theme-smackdown">smackdown</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">dayu007</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="https://liuyiyi.site/head.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">dayu007</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">努力的人更加快乐</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-Untitled-1" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/10/17/Untitled-1/" class="article-date">
+  	<time datetime="2019-10-17T07:14:00.000Z" itemprop="datePublished">2019-10-17</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      假如生产环境出现CPU占用过高，请谈谈你的分析思路和定位
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/项目分析/">项目分析</a>
+	</div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="假如生产环境出现CPU占用过高，请谈谈你的分析思路和定位"><a href="#假如生产环境出现CPU占用过高，请谈谈你的分析思路和定位" class="headerlink" title="假如生产环境出现CPU占用过高，请谈谈你的分析思路和定位"></a>假如生产环境出现CPU占用过高，请谈谈你的分析思路和定位</h1><h2 id="模拟问题代码"><a href="#模拟问题代码" class="headerlink" title="模拟问题代码"></a>模拟问题代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Random;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HighCPUDemo</span></span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>)&#123;</span><br><span class="line">            System.out.println(<span class="keyword">new</span> Random(<span class="number">999999</span>));</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当编译运行上面代码则会循环打印，对CPU占用较高</p>
+<p>下面具体展示</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@izuf67vu7do989lgqvknozz ~]# javac HighCPUDemo.java</span><br><span class="line">[root@izuf67vu7do989lgqvknozz ~]# java HighCPUDemo</span><br></pre></td></tr></table></figure>
+<h2 id="问题分析：结合Linux和jdk一块分析"><a href="#问题分析：结合Linux和jdk一块分析" class="headerlink" title="问题分析：结合Linux和jdk一块分析"></a>问题分析：结合Linux和jdk一块分析</h2><p>代码运行起来后可用top查看占用CPU最高的进程或者jps命令查看是哪些运行的java进程</p>
+<h3 id="1、top命令-找到CPU占比最高的进程"><a href="#1、top命令-找到CPU占比最高的进程" class="headerlink" title="1、top命令-找到CPU占比最高的进程"></a>1、top命令-找到CPU占比最高的进程</h3><p>找到占用最高的进程是java进程，进程id：11849</p>
+<h3 id="2、ps-ef或者jps定位"><a href="#2、ps-ef或者jps定位" class="headerlink" title="2、ps -ef或者jps定位"></a>2、ps -ef或者jps定位</h3><p>得知是一个怎么样的后台程序给我们惹事</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@izuf67vu7do989lgqvknozz ~]# jps -l</span><br><span class="line">11861 sun.tools.jps.Jps</span><br><span class="line">11849 HighCPUDemo</span><br><span class="line">[root@izuf67vu7do989lgqvknozz ~]# ps -ef|grep java|grep -v grep</span><br><span class="line">root     11849 11636 14 10:02 pts/0    00:00:13 java HighCPUDemo</span><br></pre></td></tr></table></figure>
+<p>以上两种方式都可以查看java进程，找到了java进程，接下来就要定位到具体的线程或者代码</p>
+<p>公式：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -mp 进程 -o THREAD, tid, time</span><br></pre></td></tr></table></figure>
+<p><strong>参数解释</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-m 显示所有的线程</span><br><span class="line">-p pid	进程使用cpu的时间</span><br><span class="line">-o 该参数后是用户自定义格式</span><br></pre></td></tr></table></figure>
+<h3 id="3、定位具体线程"><a href="#3、定位具体线程" class="headerlink" title="3、定位具体线程"></a>3、定位具体线程</h3><p>输入公式，显示出下面的结果，找到占用CPU最高的那个线程，找出线程id–&gt;TID—&gt;11850</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@izuf67vu7do989lgqvknozz ~]# ps -mp 11849 -o THREAD,tid,time</span><br><span class="line">USER     %CPU PRI SCNT WCHAN  USER SYSTEM   TID     TIME</span><br><span class="line">root     13.8   -    - -         -      -     - 00:00:24</span><br><span class="line">root      0.0  19    - futex_    -      - 11849 00:00:00</span><br><span class="line">root     13.5  19    - n_tty_    -      - 11850 00:00:23</span><br><span class="line">root      0.0  19    - futex_    -      - 11851 00:00:00</span><br><span class="line">root      0.0  19    - futex_    -      - 11852 00:00:00</span><br><span class="line">root      0.0  19    - futex_    -      - 11853 00:00:00</span><br><span class="line">root      0.0  19    - futex_    -      - 11854 00:00:00</span><br><span class="line">root      0.0  19    - futex_    -      - 11855 00:00:00</span><br><span class="line">root      0.0  19    - futex_    -      - 11856 00:00:00</span><br><span class="line">root      0.0  19    - futex_    -      - 11857 00:00:00</span><br><span class="line">root      0.0  19    - futex_    -      - 11858 00:00:00</span><br></pre></td></tr></table></figure>
+<h3 id="4、将需要的线程id转换为16进制格式（英文小写格式）"><a href="#4、将需要的线程id转换为16进制格式（英文小写格式）" class="headerlink" title="4、将需要的线程id转换为16进制格式（英文小写格式）"></a>4、将需要的线程id转换为16进制格式（英文小写格式）</h3><p><strong>公式</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">printf "%x\n"有问题的线程ID</span><br></pre></td></tr></table></figure>
+<p>下面是运算结果</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@izuf67vu7do989lgqvknozz ~]# printf "%x\n" 11850</span><br><span class="line">2e4a</span><br></pre></td></tr></table></figure>
+<p><strong>即11850的16进制是2e4a</strong></p>
+<h3 id="5、找出具体的问题代码"><a href="#5、找出具体的问题代码" class="headerlink" title="5、找出具体的问题代码"></a>5、找出具体的问题代码</h3><h3 id="公式"><a href="#公式" class="headerlink" title="公式"></a>公式</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstack 进程id | grep tid（16进制线程id小写英文）-A60</span><br></pre></td></tr></table></figure>
+<p>显示出有问题的代码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[root@izuf67vu7do989lgqvknozz ~]# jstack 11849 |grep 2e4a -A60</span><br><span class="line">"main" #1 prio=5 os_prio=0 tid=0x00007f8968008800 nid=0x2e4a runnable [0x00007f8970626000]</span><br><span class="line">   java.lang.Thread.State: RUNNABLE</span><br><span class="line">        at java.io.FileOutputStream.writeBytes(Native Method)</span><br><span class="line">        at java.io.FileOutputStream.write(FileOutputStream.java:326)</span><br><span class="line">        at java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:82)</span><br><span class="line">        at java.io.BufferedOutputStream.flush(BufferedOutputStream.java:140)</span><br><span class="line">        - locked &lt;0x00000000ecd6b900&gt; (a java.io.BufferedOutputStream)</span><br><span class="line">        at java.io.PrintStream.write(PrintStream.java:482)</span><br><span class="line">        - locked &lt;0x00000000ecd63d70&gt; (a java.io.PrintStream)</span><br><span class="line">        at sun.nio.cs.StreamEncoder.writeBytes(StreamEncoder.java:221)</span><br><span class="line">        at sun.nio.cs.StreamEncoder.implFlushBuffer(StreamEncoder.java:291)</span><br><span class="line">        at sun.nio.cs.StreamEncoder.flushBuffer(StreamEncoder.java:104)</span><br><span class="line">        - locked &lt;0x00000000ecd63d28&gt; (a java.io.OutputStreamWriter)</span><br><span class="line">        at java.io.OutputStreamWriter.flushBuffer(OutputStreamWriter.java:185)</span><br><span class="line">        at java.io.PrintStream.newLine(PrintStream.java:546)</span><br><span class="line">        - eliminated &lt;0x00000000ecd63d70&gt; (a java.io.PrintStream)</span><br><span class="line">        at java.io.PrintStream.println(PrintStream.java:824)</span><br><span class="line">        - locked &lt;0x00000000ecd63d70&gt; (a java.io.PrintStream)</span><br><span class="line">        at HighCPUDemo.main(HighCPUDemo.java:7)</span><br><span class="line"></span><br><span class="line">"VM Thread" os_prio=0 tid=0x00007f896806d000 nid=0x2e4b runnable</span><br><span class="line"></span><br><span class="line">"VM Periodic Task Thread" os_prio=0 tid=0x00007f89680b5800 nid=0x2e52 waiting on condition</span><br><span class="line"></span><br><span class="line">JNI global references: 9</span><br></pre></td></tr></table></figure>
+<p>从结果上显示，问题代码出现在<code>at HighCPUDemo.main(HighCPUDemo.java:7)</code></p>
+<p>以上就是具体的案例分析</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/10/17/Untitled-2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          GitHub使用
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/10/17/Untitled/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">生产环境服务器变慢，诊断思路和性能评估？</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="ds-share share" data-thread-key="Untitled-1" data-title="假如生产环境出现CPU占用过高，请谈谈你的分析思路和定位" data-url="https://dayu007.github.io/2019/10/17/Untitled-1/" data-images="https://liuyiyi.site/head.jpg" data-content="假如生产环境出现CPU占用过高，请谈谈你的分析思路和定位">
+    <div class="ds-share-inline">
+      <ul class="ds-share-icons-16">
+      	<li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+        <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+        <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+        <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+        <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+      </ul>
+      <div class="ds-share-icons-more">
+      </div>
+    </div>
+ </div>
+ 
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2019 dayu007
+      </div>
+        <div class="footer-right">
+          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/smackgg/hexo-theme-smackdown" target="_blank">Smackdown</a>
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="/js/main.js"></script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js"></script>
+
+
+  </div>
+</body>
+</html>
